@@ -13,7 +13,7 @@ pipeline {
     stage('Update manifest version') {
       steps {
           powershell '''
-            $manifest = "Package.appxmanifest"     
+            $manifest = "App1//Package.appxmanifest"     
             [xml]$xmlDoc = Get-Content $manifest
             $version = $xmlDoc.Package.Identity.Version
             $trimmedVersion = $version -replace '.[0-9]+$', '.'
@@ -25,7 +25,7 @@ pipeline {
     
     stage('Build') {
       steps {
-        bat "C:\\Progra~1\\dotnet\\dotnet restore App1.csproj"
+        bat "C:\\Progra~1\\dotnet\\dotnet restore App1//App1.csproj"
 
         bat "\"${MSBUILD}\" App1.sln /p:Configuration=${env.CONFIG} /p:AppxBundlePlatforms=${env.PLATFORM}  /p:AppxBundle=Never /p:UapAppxPackageBuildMode=Sideloading  /p:AppxPackageSigningEnabled=false"
         
